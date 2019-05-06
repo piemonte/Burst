@@ -28,7 +28,7 @@ import UIKit
 import Foundation
 
 /// 🎆 Burst, a Swift and easy way to apply a burst effect to UI elements
-public class BurstView: UIView {
+open class BurstView: UIView {
     
     // MARK: - properties
     
@@ -67,7 +67,7 @@ public class BurstView: UIView {
     
     // MARK: - object lifecycle
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         
         let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
@@ -122,7 +122,7 @@ public class BurstView: UIView {
         explosionLayer.seed = 31337
         self._explosionLayer = explosionLayer
         self.layer.addSublayer(explosionLayer)
-
+        
         let chargeCell = CAEmitterCell()
         chargeCell.name = "charge"
         chargeCell.alphaRange = 0.20
@@ -192,13 +192,13 @@ extension BurstView {
 // MARK: - UIButton
 
 /// Burst Button that emits when changing to a selected state.
-public class BurstButton: UIButton {
-
+open class BurstButton: UIButton {
+    
     // MARK: - properties
     
     public var burstView: BurstView = BurstView(frame: .zero)
     
-    public override var isSelected: Bool {
+    open override var isSelected: Bool {
         didSet {
             if isSelected {
                 self.animateToSelected(duration: 0.6)
@@ -211,7 +211,7 @@ public class BurstButton: UIButton {
     
     // MARK: - layout
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         self.burstView.frame = self.bounds
         self.insertSubview(self.burstView, at: 0)

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Burst'
-  s.version = '0.1.0'
+  s.version = '0.1.1'
   s.license = 'MIT'
   s.summary = 'Swift and easy way to make elements in your iOS or tvOS app burst'
   s.homepage = 'https://github.com/piemonte/burst'

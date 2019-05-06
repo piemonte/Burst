@@ -1,8 +1,8 @@
-![Burst](https://raw.github.com/piemonte/burst/master/burst.gif)
+![Burst](https://raw.github.com/piemonte/burst/master/heartburst.gif)
 
 ## Burst 🎆
 
-`Burst` is a [Swift](https://developer.apple.com/swift/) and easy way to make elements in your iOS app burst.
+`Burst` is a [Swift](https://developer.apple.com/swift/) and simple way to make elements in your iOS app burst.
 
 Back in the day, Facebook Paper popularized using CAEmitterLayers to make a firework effect when tapping on a button. This library provides CAEmitterLayer firework effects but in a customizable re-usable open source Swift project.
 

@@ -32,6 +32,7 @@ public class BurstView: UIView {
     
     // MARK: - properties
     
+    /// Adjust the image used by each particle.
     public var particleImage: UIImage? {
         didSet {
             for cell in self._emitterCells {
@@ -39,6 +40,8 @@ public class BurstView: UIView {
             }
         }
     }
+    
+    /// Adjust the scale for each particle.
     public var particleScale: CGFloat = 0.05 {
         didSet {
             for cell in self._emitterCells {
@@ -46,6 +49,8 @@ public class BurstView: UIView {
             }
         }
     }
+    
+    // Adjsut the range of scale for each particle.
     public var particleScaleRange: CGFloat = 0.02 {
         didSet {
             for cell in self._emitterCells {
@@ -60,6 +65,8 @@ public class BurstView: UIView {
     private var _chargeLayer: CAEmitterLayer?
     private var _explosionLayer: CAEmitterLayer?
     
+    // MARK: - object lifecycle
+    
     public override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -67,8 +74,6 @@ public class BurstView: UIView {
         self._chargeLayer?.emitterPosition = center
         self._explosionLayer?.emitterPosition = center
     }
-    
-    // MARK: - object lifecycle
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -154,6 +159,7 @@ fileprivate let EmitterCellExplosionBirthRateKeyPath = "emitterCells.explosion.b
 
 extension BurstView {
     
+    /// Start an effect.
     public func burst() {
         self._chargeLayer?.beginTime = CACurrentMediaTime()
         self._chargeLayer?.setValue(80, forKeyPath: EmitterCellChargeBirthRateKeyPath)
@@ -163,6 +169,7 @@ extension BurstView {
         }
     }
     
+    // Expand an explosion effect.
     public func explode() {
         self._chargeLayer?.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
         
@@ -174,6 +181,7 @@ extension BurstView {
         }
     }
     
+    /// Stop all effects.
     public func stop() {
         self._chargeLayer?.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
         self._explosionLayer?.setValue(0, forKeyPath: EmitterCellExplosionBirthRateKeyPath)
@@ -183,6 +191,7 @@ extension BurstView {
 
 // MARK: - UIButton
 
+/// Burst Button that emits when changing to a selected state.
 public class BurstButton: UIButton {
 
     // MARK: - properties

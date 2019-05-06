@@ -1,4 +1,4 @@
-![Burst](https://raw.github.com/piemonte/burst/master/heartburst.gif)
+![Burst](https://github.com/piemonte/Burst/blob/master/heartburst.gif?raw=true)
 
 ## Burst 🎆
 

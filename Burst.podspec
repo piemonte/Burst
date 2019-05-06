@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.resources = 'Sources/Resources/*.png'
   s.requires_arc = true
   s.swift_version = '5.0'
-  s.screenshot = "https://raw.github.com/piemonte/Burst/master/burst.gif"
+  s.screenshot = "https://raw.github.com/piemonte/burst/master/heartburst.gif"
 end

@@ -4,9 +4,11 @@
 
 `Burst` is a [Swift](https://developer.apple.com/swift/) and simple way to make elements in your iOS app burst.
 
-Back in the day, Facebook Paper popularized the firework burst effect using CAEmitterLayers. This library provides a CAEmitterLayer firework effect contained in a customizable open source library, written in Swift.
+Back in the day, [Facebook Paper](https://en.wikipedia.org/wiki/Facebook_Paper) popularized a firework burst effect using CAEmitterLayers with buttons.
 
-If you enjoy this, you may also like another CAEmitterLayer project, [Twinkle](https://github.com/piemonte/twinkle).
+This library provides a firework effect using CAEmitterLayers contained in an easy-to-use customizable component, written in Swift.
+
+If you enjoy this library, you may also like another CAEmitterLayer project, [Twinkle](https://github.com/piemonte/twinkle).
 
 [![Build Status](https://travis-ci.org/piemonte/Burst.svg?branch=master)](https://travis-ci.org/piemonte/Burst) [![Pod Version](https://img.shields.io/cocoapods/v/Burst.svg?style=flat)](http://cocoadocs.org/docsets/Burst/) [![Swift Version](https://img.shields.io/badge/language-swift%205.0-brightgreen.svg)](https://developer.apple.com/swift) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/piemonte/Burst/blob/master/LICENSE)
 

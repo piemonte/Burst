@@ -53,6 +53,7 @@ class ViewController: UIViewController {
         
         let button: BurstButton = BurstButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         button.center = self.view.center
+        button.adjustsImageWhenHighlighted = false
         button.setImage(UIImage(named: "heart"), for: .normal)
         button.setImage(UIImage(named: "unheart"), for: .selected)
       //  button.burstView.particleImage = UIImage(named: "burst") // for customization

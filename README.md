@@ -67,6 +67,7 @@ extension ViewController {
 
 * [Core Animation Reference Collection](https://developer.apple.com/library/ios/documentation/Cocoa/Reference/CoreAnimation_framework/index.html)
 * [Swift Evolution](https://github.com/apple/swift-evolution)
+* [CAEmitterLayer – NSHipster](https://nshipster.com/caemitterlayer/)
 * [MCFireworksButton](https://github.com/matthewcheok/MCFireworksButton), Objective-C version
 * [Twinkle](https://github.com/piemonte/twinkle)
 * [Twinkle for Android](https://github.com/dev-labs-bg/twinkle)

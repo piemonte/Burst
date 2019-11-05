@@ -120,6 +120,7 @@ open class BurstView: UIView {
         explosionLayer.renderMode = .oldestFirst
         explosionLayer.masksToBounds = false
         explosionLayer.seed = 31337
+        
         self._explosionLayer = explosionLayer
         self.layer.addSublayer(explosionLayer)
         
@@ -146,8 +147,19 @@ open class BurstView: UIView {
         chargeLayer.emitterCells = [chargeCell]
         chargeLayer.renderMode = .oldestFirst
         chargeLayer.masksToBounds = false
+        
         self._chargeLayer = chargeLayer
         self.layer.addSublayer(chargeLayer)
+    }
+    
+    deinit {
+        self._chargeLayer?.removeFromSuperlayer()
+        self._chargeLayer = nil
+        
+        self._explosionLayer?.removeFromSuperlayer()
+        self._explosionLayer = nil
+        
+        self._emitterCells.removeAll()
     }
     
 }
@@ -234,7 +246,7 @@ open class BurstButton: UIButton {
         self.burstView.frame = self.bounds
         self.insertSubview(self.burstView, at: 0)
     }
-    
+        
     // MARK: - animations
     
     public func animateToSelected(duration: TimeInterval) {

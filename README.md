@@ -20,10 +20,10 @@ If you enjoy this library, you may also like another CAEmitterLayer project, [Tw
 
 ```ruby
 # CocoaPods
-pod "Burst", "~> 0.1.0"
+pod "Burst", "~> 0.1.2"
 
 # Carthage
-github "piemonte/Burst" ~> 0.1.0
+github "piemonte/Burst" ~> 0.1.2
 
 # SwiftPM
 let package = Package(
@@ -46,9 +46,9 @@ The sample project provides an example of how to integrate `Burst`, otherwise yo
 // ...
     let button: BurstButton = BurstButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 // ...
-   
+
 extension ViewController {
-    
+
     @objc func handleButton(_ button: BurstButton) {
         button.isSelected = !button.isSelected
     }

@@ -62,8 +62,27 @@ open class BurstView: UIView {
     // MARK: - ivars
     
     private var _emitterCells: [CAEmitterCell] = []
-    private var _chargeLayer: CAEmitterLayer?
-    private var _explosionLayer: CAEmitterLayer?
+    private lazy var _chargeLayer: CAEmitterLayer = {
+        let chargeLayer = CAEmitterLayer()
+        chargeLayer.name = "emitterLayer"
+        chargeLayer.emitterShape = .circle
+        chargeLayer.emitterMode = .outline
+        chargeLayer.emitterSize = CGSize(width: 30, height: 0)
+        chargeLayer.renderMode = .oldestFirst
+        chargeLayer.masksToBounds = false
+        return chargeLayer
+    }()
+    private lazy var _explosionLayer: CAEmitterLayer = {
+        let explosionLayer = CAEmitterLayer()
+        explosionLayer.name = "emitterLayer"
+        explosionLayer.emitterShape = .circle
+        explosionLayer.emitterMode = .outline
+        explosionLayer.emitterSize = CGSize(width: 25, height: 0)
+        explosionLayer.renderMode = .oldestFirst
+        explosionLayer.masksToBounds = false
+        explosionLayer.seed = 31337
+        return explosionLayer
+    }()
     
     // MARK: - object lifecycle
     
@@ -71,8 +90,8 @@ open class BurstView: UIView {
         super.layoutSubviews()
         
         let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
-        self._chargeLayer?.emitterPosition = center
-        self._explosionLayer?.emitterPosition = center
+        self._chargeLayer.emitterPosition = center
+        self._explosionLayer.emitterPosition = center
     }
     
     public override init(frame: CGRect) {
@@ -105,24 +124,12 @@ open class BurstView: UIView {
         explosionCell.birthRate = 0
         explosionCell.velocity = 40.00
         explosionCell.velocityRange = 10.00
-        
-        // apply initial settings
         explosionCell.contents = self.particleImage?.cgImage
         explosionCell.scale = self.particleScale
         explosionCell.scaleRange = self.particleScaleRange
-        
-        let explosionLayer = CAEmitterLayer()
-        explosionLayer.name = "emitterLayer"
-        explosionLayer.emitterShape = .circle
-        explosionLayer.emitterMode = .outline
-        explosionLayer.emitterSize = CGSize(width: 25, height: 0)
-        explosionLayer.emitterCells = [explosionCell]
-        explosionLayer.renderMode = .oldestFirst
-        explosionLayer.masksToBounds = false
-        explosionLayer.seed = 31337
-        
-        self._explosionLayer = explosionLayer
-        self.layer.addSublayer(explosionLayer)
+                
+        self._explosionLayer.emitterCells = [explosionCell]
+        self.layer.addSublayer(self._explosionLayer)
         
         let chargeCell = CAEmitterCell()
         chargeCell.name = "charge"
@@ -133,31 +140,22 @@ open class BurstView: UIView {
         chargeCell.birthRate = 0
         chargeCell.velocity = -40.0
         chargeCell.velocityRange = 0.0
-        
-        // apply initial settings
         chargeCell.contents = self.particleImage?.cgImage
         chargeCell.scale = self.particleScale
         chargeCell.scaleRange = self.particleScaleRange
         
-        let chargeLayer = CAEmitterLayer()
-        chargeLayer.name = "emitterLayer"
-        chargeLayer.emitterShape = .circle
-        chargeLayer.emitterMode = .outline
-        chargeLayer.emitterSize = CGSize(width: 30, height: 0)
-        chargeLayer.emitterCells = [chargeCell]
-        chargeLayer.renderMode = .oldestFirst
-        chargeLayer.masksToBounds = false
+        self._chargeLayer.emitterCells = [chargeCell]
+        self.layer.addSublayer(self._chargeLayer)
         
-        self._chargeLayer = chargeLayer
-        self.layer.addSublayer(chargeLayer)
+        self._emitterCells = [chargeCell, explosionCell]
     }
     
     deinit {
-        self._chargeLayer?.removeFromSuperlayer()
-        self._chargeLayer = nil
+        self._chargeLayer.removeFromSuperlayer()
+        self._chargeLayer.emitterCells?.removeAll()
         
-        self._explosionLayer?.removeFromSuperlayer()
-        self._explosionLayer = nil
+        self._explosionLayer.removeFromSuperlayer()
+        self._explosionLayer.emitterCells?.removeAll()
         
         self._emitterCells.removeAll()
     }
@@ -173,30 +171,30 @@ extension BurstView {
     
     /// Start an effect.
     public func burst() {
-        self._chargeLayer?.beginTime = CACurrentMediaTime()
-        self._chargeLayer?.setValue(80, forKeyPath: EmitterCellChargeBirthRateKeyPath)
+        self._chargeLayer.beginTime = CACurrentMediaTime()
+        self._chargeLayer.setValue(80, forKeyPath: EmitterCellChargeBirthRateKeyPath)
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(200)) {
-            self.explode()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(200)) { [weak self] in
+            self?.explode()
         }
     }
     
     // Expand an explosion effect.
     public func explode() {
-        self._chargeLayer?.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
+        self._chargeLayer.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
         
-        self._explosionLayer?.beginTime = CACurrentMediaTime()
-        self._explosionLayer?.setValue(500, forKeyPath: EmitterCellExplosionBirthRateKeyPath)
+        self._explosionLayer.beginTime = CACurrentMediaTime()
+        self._explosionLayer.setValue(500, forKeyPath: EmitterCellExplosionBirthRateKeyPath)
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(100)) {
-            self.stop()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(100)) { [weak self] in
+            self?.stop()
         }
     }
     
     /// Stop all effects.
     public func stop() {
-        self._chargeLayer?.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
-        self._explosionLayer?.setValue(0, forKeyPath: EmitterCellExplosionBirthRateKeyPath)
+        self._chargeLayer.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
+        self._explosionLayer.setValue(0, forKeyPath: EmitterCellExplosionBirthRateKeyPath)
     }
     
 }
@@ -225,6 +223,7 @@ open class BurstButton: UIButton {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
+        
         self.burstView.frame = self.bounds
         self.insertSubview(self.burstView, at: 0)
     }
@@ -246,26 +245,30 @@ open class BurstButton: UIButton {
         self.burstView.frame = self.bounds
         self.insertSubview(self.burstView, at: 0)
     }
+    
+    deinit {
+        self.burstView.stop()
+    }
         
     // MARK: - animations
     
     public func animateToSelected(duration: TimeInterval) {
         self.transform = .identity
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: UIView.KeyframeAnimationOptions(), animations: {
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: UIView.KeyframeAnimationOptions(), animations: { [weak self] in
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+                self?.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
             })
             UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+                self?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
             })
             UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                self?.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
             })
             UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                self?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             })
             UIView.addKeyframe(withRelativeStartTime: 0.8, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             })
         }, completion: {completed in
         })
@@ -273,15 +276,15 @@ open class BurstButton: UIButton {
     
     public func animateToUnselected(duration: TimeInterval) {
         self.transform = CGAffineTransform.identity
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: UIView.KeyframeAnimationOptions(), animations: {
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: UIView.KeyframeAnimationOptions(), animations: { [weak self] in
             UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+                self?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
             })
             UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                self?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             })
             UIView.addKeyframe(withRelativeStartTime: 0.8, relativeDuration: 0.2, animations: {
-                self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             })
         }, completion: { completed in
         })

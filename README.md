@@ -1,5 +1,3 @@
-![Burst](https://github.com/piemonte/Burst/blob/master/heartburst.gif?raw=true)
-
 ## Burst 🎆
 
 `Burst` is a [Swift](https://developer.apple.com/swift/) and simple way to make elements in your iOS app burst.

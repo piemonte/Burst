@@ -11,12 +11,6 @@
 		06CBCA421A9DA31C00FD987B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CBCA411A9DA31C00FD987B /* AppDelegate.swift */; };
 		06CBCA441A9DA31C00FD987B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CBCA431A9DA31C00FD987B /* ViewController.swift */; };
 		06CBCA491A9DA31C00FD987B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06CBCA481A9DA31C00FD987B /* Images.xcassets */; };
-		06CBCA4C1A9DA31C00FD987B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06CBCA4A1A9DA31C00FD987B /* LaunchScreen.xib */; };
-		06CC6744227C12010079B3AC /* burst-red.png in Resources */ = {isa = PBXBuildFile; fileRef = 06CC6743227C12010079B3AC /* burst-red.png */; };
-		06CC6746227C149C0079B3AC /* burst-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 06CC6745227C149C0079B3AC /* burst-white.png */; };
-		06DE658C1E18295D00C064DE /* Burst.h in Headers */ = {isa = PBXBuildFile; fileRef = 06DE658A1E18295D00C064DE /* Burst.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		06DE65921E1829C800C064DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06DE65911E1829C800C064DE /* CoreGraphics.framework */; };
-		06DE65941E1829D300C064DE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06DE65931E1829D300C064DE /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,15 +20,10 @@
 		06CBCA411A9DA31C00FD987B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../Burst/AppDelegate.swift; sourceTree = "<group>"; };
 		06CBCA431A9DA31C00FD987B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		06CBCA481A9DA31C00FD987B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		06CBCA4B1A9DA31C00FD987B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		06CBCA611A9DA36B00FD987B /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = ../Base.xcconfig; sourceTree = "<group>"; };
 		06CBCA621A9DA36B00FD987B /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Debug.xcconfig; sourceTree = "<group>"; };
 		06CBCA631A9DA36B00FD987B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Release.xcconfig; sourceTree = "<group>"; };
-		06CC6743227C12010079B3AC /* burst-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "burst-red.png"; path = "../../../Sources/Resources/burst-red.png"; sourceTree = "<group>"; };
-		06CC6745227C149C0079B3AC /* burst-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "burst-white.png"; path = "../../../Sources/Resources/burst-white.png"; sourceTree = "<group>"; };
 		06DE65881E18295D00C064DE /* Burst.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Burst.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		06DE658A1E18295D00C064DE /* Burst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Burst.h; path = ../../Sources/Burst.h; sourceTree = "<group>"; };
-		06DE658B1E18295D00C064DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Framework/Info.plist; sourceTree = "<group>"; };
 		06DE65911E1829C800C064DE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		06DE65931E1829D300C064DE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -51,8 +40,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06DE65941E1829D300C064DE /* UIKit.framework in Frameworks */,
-				06DE65921E1829C800C064DE /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +49,6 @@
 		06712F321A9DA41A00C44371 /* Burst */ = {
 			isa = PBXGroup;
 			children = (
-				06CC6742227C11F50079B3AC /* Resources */,
 				046A4B801C1E3BD100E6CB2F /* Burst.swift */,
 			);
 			path = Burst;
@@ -73,7 +59,6 @@
 			children = (
 				06712F321A9DA41A00C44371 /* Burst */,
 				06CBCA3E1A9DA31C00FD987B /* iOS */,
-				06DE65891E18295D00C064DE /* Framework */,
 				06CBCA3D1A9DA31C00FD987B /* Products */,
 				06DE65901E1829C800C064DE /* Frameworks */,
 			);
@@ -94,7 +79,6 @@
 				06CBCA411A9DA31C00FD987B /* AppDelegate.swift */,
 				06CBCA431A9DA31C00FD987B /* ViewController.swift */,
 				06CBCA481A9DA31C00FD987B /* Images.xcassets */,
-				06CBCA4A1A9DA31C00FD987B /* LaunchScreen.xib */,
 				06CBCA3F1A9DA31C00FD987B /* Supporting Files */,
 			);
 			name = iOS;
@@ -110,25 +94,6 @@
 				06908853227BA26B002CB9FF /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		06CC6742227C11F50079B3AC /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				06CC6745227C149C0079B3AC /* burst-white.png */,
-				06CC6743227C12010079B3AC /* burst-red.png */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		06DE65891E18295D00C064DE /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-				06DE658A1E18295D00C064DE /* Burst.h */,
-				06DE658B1E18295D00C064DE /* Info.plist */,
-			);
-			name = Framework;
-			path = Twinkle;
 			sourceTree = "<group>";
 		};
 		06DE65901E1829C800C064DE /* Frameworks */ = {
@@ -147,7 +112,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06DE658C1E18295D00C064DE /* Burst.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,10 +199,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06CC6746227C149C0079B3AC /* burst-white.png in Resources */,
-				06CBCA4C1A9DA31C00FD987B /* LaunchScreen.xib in Resources */,
 				06CBCA491A9DA31C00FD987B /* Images.xcassets in Resources */,
-				06CC6744227C12010079B3AC /* burst-red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,17 +231,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		06CBCA4A1A9DA31C00FD987B /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				06CBCA4B1A9DA31C00FD987B /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		06CBCA591A9DA31C00FD987B /* Debug */ = {

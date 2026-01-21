@@ -149,14 +149,16 @@ open class BurstView: UIView {
         self._emitterCells = [chargeCell, explosionCell]
     }
     
-    deinit {
-        self._chargeLayer.removeFromSuperlayer()
-        self._chargeLayer.emitterCells?.removeAll()
-        
-        self._explosionLayer.removeFromSuperlayer()
-        self._explosionLayer.emitterCells?.removeAll()
-        
-        self._emitterCells.removeAll()
+    nonisolated deinit {
+        MainActor.assumeIsolated {
+            self._chargeLayer.removeFromSuperlayer()
+            self._chargeLayer.emitterCells?.removeAll()
+
+            self._explosionLayer.removeFromSuperlayer()
+            self._explosionLayer.emitterCells?.removeAll()
+
+            self._emitterCells.removeAll()
+        }
     }
     
 }
@@ -250,8 +252,10 @@ open class BurstButton: UIButton {
         self.insertSubview(self.burstView, at: 0)
     }
     
-    deinit {
-        self.burstView.stop()
+    nonisolated deinit {
+        MainActor.assumeIsolated {
+            self.burstView.stop()
+        }
     }
         
     // MARK: - animations

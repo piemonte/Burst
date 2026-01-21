@@ -8,9 +8,13 @@ This library provides a firework effect using CAEmitterLayers contained in an ea
 
 If you enjoy this library, you may also like another CAEmitterLayer project, [Twinkle](https://github.com/piemonte/twinkle).
 
-[![Build Status](https://travis-ci.org/piemonte/Burst.svg?branch=master)](https://travis-ci.org/piemonte/Burst) [![Pod Version](https://img.shields.io/cocoapods/v/Burst.svg?style=flat)](http://cocoadocs.org/docsets/Burst/) [![Swift Version](https://img.shields.io/badge/language-swift%205.0-brightgreen.svg)](https://developer.apple.com/swift) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/piemonte/Burst/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/piemonte/Burst.svg?branch=master)](https://travis-ci.org/piemonte/Burst) [![Pod Version](https://img.shields.io/cocoapods/v/Burst.svg?style=flat)](http://cocoadocs.org/docsets/Burst/) [![Swift Version](https://img.shields.io/badge/language-swift%205.9-brightgreen.svg)](https://developer.apple.com/swift) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/piemonte/Burst/blob/master/LICENSE)
 
-* `5.0` - Target your Podfile to the latest release or master
+## Requirements
+
+- iOS 16.0+
+- Swift 5.9+
+- Xcode 15.0+
 
 # Quick Start
 
@@ -20,15 +24,10 @@ If you enjoy this library, you may also like another CAEmitterLayer project, [Tw
 # CocoaPods
 pod "Burst", "~> 0.1.2"
 
-# Carthage
-github "piemonte/Burst" ~> 0.1.2
-
 # SwiftPM
-let package = Package(
-    dependencies: [
-        .Package(url: "https://github.com/piemonte/Burst", majorVersion: 0)
-    ]
-)
+dependencies: [
+    .package(url: "https://github.com/piemonte/Burst", from: "0.1.2")
+]
 ```
 
 ## Usage

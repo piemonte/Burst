@@ -7,11 +7,11 @@ Pod::Spec.new do |s|
   s.social_media_url = 'http://twitter.com/piemonte'
   s.authors = { 'patrick piemonte' => "patrick.piemonte@gmail.com" }
   s.source = { :git => 'https://github.com/piemonte/burst.git', :tag => s.version }
-  s.ios.deployment_target = '10.0'
-  s.tvos.deployment_target = '10.0'
+  s.ios.deployment_target = '16.0'
+  s.tvos.deployment_target = '16.0'
   s.source_files = 'Sources/*.swift'
   s.resources = 'Sources/Resources/*.png'
   s.requires_arc = true
-  s.swift_version = '5.0'
+  s.swift_version = '5.9'
   s.screenshot = "https://raw.github.com/piemonte/burst/master/heartburst.gif"
 end

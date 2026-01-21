@@ -28,6 +28,7 @@ import UIKit
 import Foundation
 
 /// 🎆 Burst, a Swift and easy way to apply a burst effect to UI elements
+@MainActor
 open class BurstView: UIView {
     
     // MARK: - properties
@@ -50,7 +51,7 @@ open class BurstView: UIView {
         }
     }
     
-    // Adjsut the range of scale for each particle.
+    /// Adjust the range of scale for each particle.
     public var particleScaleRange: CGFloat = 0.02 {
         didSet {
             for cell in self._emitterCells {
@@ -106,10 +107,8 @@ open class BurstView: UIView {
     
     private func commonInit() {
         if self.particleImage == nil {
-            let frameworkBundle = Bundle(for: self.classForCoder)
-            if let imagePath = frameworkBundle.path(forResource: "burst-red", ofType: "png") {
-                self.particleImage = UIImage(contentsOfFile: imagePath)
-            }
+            let frameworkBundle = Bundle(for: type(of: self))
+            self.particleImage = UIImage(named: "burst-red", in: frameworkBundle, compatibleWith: nil)
         }
         
         self.clipsToBounds = false
@@ -164,44 +163,49 @@ open class BurstView: UIView {
 
 // MARK: - actions
 
-fileprivate let EmitterCellChargeBirthRateKeyPath = "emitterCells.charge.birthRate"
-fileprivate let EmitterCellExplosionBirthRateKeyPath = "emitterCells.explosion.birthRate"
-
 extension BurstView {
-    
+
+    private enum EmitterKeyPath {
+        static let chargeBirthRate = "emitterCells.charge.birthRate"
+        static let explosionBirthRate = "emitterCells.explosion.birthRate"
+    }
+
     /// Start an effect.
     public func burst() {
         self._chargeLayer.beginTime = CACurrentMediaTime()
-        self._chargeLayer.setValue(80, forKeyPath: EmitterCellChargeBirthRateKeyPath)
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(200)) { [weak self] in
+        self._chargeLayer.setValue(80, forKeyPath: EmitterKeyPath.chargeBirthRate)
+
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .milliseconds(200))
             self?.explode()
         }
     }
-    
-    // Expand an explosion effect.
+
+    /// Expand an explosion effect.
     public func explode() {
-        self._chargeLayer.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
-        
+        self._chargeLayer.setValue(0, forKeyPath: EmitterKeyPath.chargeBirthRate)
+
         self._explosionLayer.beginTime = CACurrentMediaTime()
-        self._explosionLayer.setValue(500, forKeyPath: EmitterCellExplosionBirthRateKeyPath)
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(100)) { [weak self] in
+        self._explosionLayer.setValue(500, forKeyPath: EmitterKeyPath.explosionBirthRate)
+
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .milliseconds(100))
             self?.stop()
         }
     }
-    
+
     /// Stop all effects.
     public func stop() {
-        self._chargeLayer.setValue(0, forKeyPath: EmitterCellChargeBirthRateKeyPath)
-        self._explosionLayer.setValue(0, forKeyPath: EmitterCellExplosionBirthRateKeyPath)
+        self._chargeLayer.setValue(0, forKeyPath: EmitterKeyPath.chargeBirthRate)
+        self._explosionLayer.setValue(0, forKeyPath: EmitterKeyPath.explosionBirthRate)
     }
-    
+
 }
 
 // MARK: - UIButton
 
 /// Burst Button that emits when changing to a selected state.
+@MainActor
 open class BurstButton: UIButton {
     
     // MARK: - properties
@@ -253,41 +257,39 @@ open class BurstButton: UIButton {
     // MARK: - animations
     
     public func animateToSelected(duration: TimeInterval) {
-        self.transform = .identity
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: UIView.KeyframeAnimationOptions(), animations: { [weak self] in
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.2, animations: {
+        transform = .identity
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: []) { [weak self] in
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.2, animations: {
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.2, animations: {
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.2, animations: {
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.8, relativeDuration: 0.2, animations: {
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.8, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            })
-        }, completion: {completed in
-        })
+            }
+        }
     }
-    
+
     public func animateToUnselected(duration: TimeInterval) {
-        self.transform = CGAffineTransform.identity
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: UIView.KeyframeAnimationOptions(), animations: { [weak self] in
-            UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.2, animations: {
+        transform = .identity
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: []) { [weak self] in
+            UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.2, animations: {
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.8, relativeDuration: 0.2, animations: {
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.8, relativeDuration: 0.2) {
                 self?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            })
-        }, completion: { completed in
-        })
+            }
+        }
     }
     
 }

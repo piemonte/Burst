@@ -1,19 +1,22 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
     name: "Burst",
     platforms: [
-      .iOS(.v10)
+        .iOS(.v16)
     ],
     products: [
-      .library(name: "Burst", targets: ["Burst"])
+        .library(name: "Burst", targets: ["Burst"])
     ],
     targets: [
-      .target(
-          name: "Burst",
-          path: "Sources"
-      )
+        .target(
+            name: "Burst",
+            path: "Sources",
+            resources: [
+                .process("Resources")
+            ]
+        )
     ],
     swiftLanguageVersions: [.v5]
 )
